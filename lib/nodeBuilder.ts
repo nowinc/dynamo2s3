@@ -330,9 +330,10 @@ export class NodeBuilder {
             sid: 'AllowWriteToDestinationBucket'
         });
         const exportParametersBase = this.sourceDataExportBucket.getExecuteExportParameters(this.sourceDynamoDbTable.tableArn);
+				const exportFullParametersBase = this.sourceDataExportBucket.getExecuteFullExportParameters(this.sourceDynamoDbTable.tableArn);
 
         const executeFullExportParameters = {
-            ...exportParametersBase,
+            ...exportFullParametersBase,
             ExportType: ExportType[ExportType.FULL_EXPORT]
         }
         this.executeFullExport = this.getDynamoDbTask(

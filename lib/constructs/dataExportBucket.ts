@@ -98,6 +98,23 @@ export class DataExportBucket extends Construct {
     } else {
       return {
           S3Bucket: this.bucket.bucketName,
+          'S3Prefix.$': `$.getNextIncrementalExportTimeOutput.Payload.body.dateS3BucketPrefix`,
+          TableArn: sourceDynamoDbTableArn,
+          ExportFormat: ExportFormat[this.exportFormat]
+      };
+    }
+  }
+
+  public getExecuteFullExportParameters(sourceDynamoDbTableArn: string): any {
+    if (!this.hasPrefix()) {
+      return {
+          S3Bucket: this.bucket.bucketName,
+          TableArn: sourceDynamoDbTableArn,
+          ExportFormat: ExportFormat[this.exportFormat]
+      };
+    } else {
+      return {
+          S3Bucket: this.bucket.bucketName,
           S3Prefix: this.prefix,
           TableArn: sourceDynamoDbTableArn,
           ExportFormat: ExportFormat[this.exportFormat]
